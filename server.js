@@ -14,21 +14,21 @@ var app = express();
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   // response.sendFile(__dirname + '/views/index.html');
-  console.log(request);
+  
   
 // request.headers.user-agent
 // request.headers.accept-language
 // request.ip;
-  const ip= request.headers['x-forwarded-for'];
+  const ip= request.headers['x-forwarded-for'].split(',')[0];
   // user-agent not valid.
-  const browser= request.headers['user-agent'];
-  const language= request.headers['accept-language'];
+  const browser= request.headers['user-agent'].split(';')[0].replace(/[(]/g, ' ');
+  const language= request.headers['accept-language'].split(',')[0];
   const data= {
     "ip address": ip,
     "language": language,
     "software": browser
   }
-  
+  console.log(browser);
   response.end(JSON.stringify(data));
   
 
