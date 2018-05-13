@@ -9,24 +9,27 @@ var app = express();
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+  // response.sendFile(__dirname + '/views/index.html');
   console.log(request);
   
 // request.headers.user-agent
 // request.headers.accept-language
 // request.ip;
-  let ip= request.ip;
+  const ip= request.headers['x-forwarded-for'];
   // user-agent not valid.
-  let browser= request.headers.useragent;
-  let language= request.headers.acceptlanguage;
-  let data= {
-    "ip address": ip;
-    
+  const browser= request.headers['user-agent'];
+  const language= request.headers['accept-language'];
+  const data= {
+    "ip address": ip,
+    "language": language,
+    "software": browser
   }
+  
+  response.end(JSON.stringify(data));
   
 
 });
