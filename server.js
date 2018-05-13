@@ -15,6 +15,19 @@ app.use(express.static('public'));
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
   console.log(request);
+  
+// request.headers.user-agent
+// request.headers.accept-language
+// request.ip;
+  let ip= request.ip;
+  // user-agent not valid.
+  let browser= request.headers.useragent;
+  let language= request.headers.acceptlanguage;
+  let data= {
+    "ip address": ip;
+    
+  }
+  
 
 });
 
